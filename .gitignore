@@ -1,0 +1,5 @@
+.venv
+.env
+coverage.xml
+db.sqlite3
+.coverage

@@ -1,0 +1,7 @@
+pytest
+pytest-django
+pytest-cov
+flake8
+codecov
+django-debug-toolbar
+-r requirements.txt
