@@ -13,7 +13,6 @@ def csv_file():
 
 
 def test_csv_read_exist_file(mocker, csv_file):
-    list_ = read_csv(file_path='contrib/transacoes-2022-01-01.csv')
 
     mock_open = mock.mock_open(read_data=csv_file)
 

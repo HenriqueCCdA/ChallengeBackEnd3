@@ -5,28 +5,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap 5-->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" >
+
+
     <title>Import Csv</title>
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div>
-            <label for="csv"> Arquivo csv </label>
-            <input type="file" for="csv" name="csv-file" accept="text/csv"/>
-        </div>
-        <div>
-            <button type="submit">Upload</button>
-        </div>
-    </form>
+    <section class="m-3">
+        <h1 class="text-center"> IMPORTAR TRANSAÇÕES </h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row mb-3">
+                <div class="col-sm-10">
+                    <input class="form-control" type="file" for="csv" name="csv-file" accept="text/csv"/>
+                </div>
+                <div class="mt-3">
+                    <span class="text-secondary">Selecione o arquivo para realizar o upload</span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Importar</button>
+            </div>
+        </form>
+    </section>
 
+    <section  class="m-3">
     {% if status == 'ok' %}
-        <div>
+        <div class="alert alert-success">
             <p> Importação do arquivo {{ csv_file }} feito com sucesso </p>
         </div>
-    {% else %}
-        <div>
+    {% endif %}
+    {% if status == 'fail' %}
+        <div class="alert alert-danger">
             <p> Erro na importação do arquivo {{ csv_file }} </p>
         </div>
     {% endif %}
+    </section>
 </body>
 </html>
