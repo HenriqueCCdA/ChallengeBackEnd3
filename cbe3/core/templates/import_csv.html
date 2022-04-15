@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import Csv</title>
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="csv"> Arquivo csv </label>
+            <input type="file" for="csv" name="csv-file" accept="text/csv"/>
+        </div>
+        <div>
+            <button type="submit">Upload</button>
+        </div>
+    </form>
+
+    {% if status == 'ok' %}
+        <div>
+            <p> Importação do arquivo {{ csv_file }} feito com sucesso </p>
+        </div>
+    {% else %}
+        <div>
+            <p> Erro na importação do arquivo {{ csv_file }} </p>
+        </div>
+    {% endif %}
+</body>
+</html>
