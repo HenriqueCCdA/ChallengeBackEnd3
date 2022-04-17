@@ -1,17 +1,7 @@
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 
-
-def read_csv(file_path=None):
-    import csv
-
-    transations = []
-    with open(file_path) as f:
-        reader = csv.reader(f)
-        for r in reader:
-            transations.append(r)
-
-    return transations
+from cbe3.core.transation import file_is_empty, read_csv
 
 
 def import_csv(request):
@@ -21,11 +11,12 @@ def import_csv(request):
         fs = FileSystemStorage()
         file_name = fs.save(csv_file.name, csv_file)
         path_file_name = fs.path(file_name)
-        try:
-            list_ = read_csv(file_path=path_file_name)
-            print(list_)
-            return render(request, 'import_csv.html', {'csv_file': csv_file, 'status': 'ok'})
-        except FileNotFoundError:
-            return render(request, 'import_csv.html', {'csv_file': csv_file, 'status': 'fail'})
+        list_ = read_csv(file_path=path_file_name)
+
+        if file_is_empty(list_):
+            return render(request, 'import_csv.html', {'csv_file': csv_file, 'status': 'empty'})
+
+        return render(request, 'import_csv.html', {'csv_file': csv_file, 'status': 'ok'})
+
 
     return render(request, 'import_csv.html')
