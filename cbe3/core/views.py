@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
+from cbe3.core.models import Register
 
 from cbe3.core.transaction import file_is_empty, first_date, read_csv, save_transactions_db, transaction_valid
 
 
 def import_csv(request):
-
+    dict_ = {}
+    dict_['register'] = Register.objects.all()
     if request.method == 'POST' and request.FILES['csv-file']:
         csv_file = request.FILES['csv-file']
         fs = FileSystemStorage()
@@ -13,15 +15,17 @@ def import_csv(request):
         path_file_name = fs.path(file_name)
         raw_transactions = read_csv(file_path=path_file_name)
         raw_transactions = transaction_valid(raw_transactions)
-
+        dict_['csv_file'] = csv_file
         if file_is_empty(raw_transactions):
-            return render(request, 'import_csv.html', {'csv_file': csv_file, 'status': 'empty'})
+            dict_['status'] = 'empty'
+            return render(request, 'import_csv.html', dict_)
 
         if not save_transactions_db(raw_transactions):
-            return render(request, 'import_csv.html', {'csv_file': csv_file,
-                                                       'status': 'duplicate',
-                                                       'day': first_date(raw_transactions)})
+            dict_['status'] = 'duplicate'
+            dict_['day'] = first_date(raw_transactions)
+            return render(request, 'import_csv.html', dict_)
 
-        return render(request, 'import_csv.html', {'csv_file': csv_file, 'status': 'ok'})
+        dict_['status'] = 'ok'
+        return render(request, 'import_csv.html', dict_)
 
-    return render(request, 'import_csv.html')
+    return render(request, 'import_csv.html', dict_)
