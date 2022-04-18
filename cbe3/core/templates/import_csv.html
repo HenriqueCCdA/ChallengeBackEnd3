@@ -13,6 +13,24 @@
     <title>Import Csv</title>
 </head>
 <body>
+
+    <section  class="m-3">
+    {% if status == 'ok' %}
+        <div class="alert alert-success">
+            <p> Importação do arquivo {{ csv_file.name }} feito com sucesso </p>
+        </div>
+    {% elif status == 'empty' %}
+        <div class="alert alert-danger">
+            <p> Erro na importação do arquivo {{ csv_file.name }}. O arquivo está vazio! </p>
+        </div>
+    {% elif status == 'duplicate' %}
+        <div class="alert alert-danger">
+            <p> Erro na importação do arquivo {{ csv_file.name }}. O arquivo de {{ day }} já foi importado! </p>
+        </div>
+    {% endif %}
+    </section>
+
+
     <section class="m-3">
         <h1 class="text-center"> IMPORTAR TRANSAÇÕES </h1>
         <form method="post" enctype="multipart/form-data">
@@ -32,19 +50,23 @@
     </section>
 
     <section  class="m-3">
-    {% if status == 'ok' %}
-        <div class="alert alert-success">
-            <p> Importação do arquivo {{ csv_file.name }} feito com sucesso </p>
-        </div>
-    {% elif status == 'empty' %}
-        <div class="alert alert-danger">
-            <p> Erro na importação do arquivo {{ csv_file.name }}. O arquivo está vazio! </p>
-        </div>
-    {% elif status == 'duplicate' %}
-        <div class="alert alert-danger">
-            <p> Erro na importação do arquivo {{ csv_file.name }}. O arquivo de {{ day }} já foi importado! </p>
-        </div>
-    {% endif %}
+        <h2 class="text-center"> IMPORTAÇÕES REALIZADAS </h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">DATA TRANSAÇÕES</th>
+                    <th scope="col">DATA IMPORTAÇÂO</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for r in register %}
+                <tr>
+                    <td>{{r.date}}</td>
+                    <td>{{r.created_at}}</td>
+                </tr>
+            {% endfor %}
+             </tbody>
+        </table>
     </section>
 </body>
 </html>

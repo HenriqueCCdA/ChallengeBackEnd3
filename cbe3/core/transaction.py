@@ -1,7 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
 
-from cbe3.core.models import Transaction
+from cbe3.core.models import Register, Transaction
 
 
 def read_csv(file_path=None):
@@ -92,6 +92,8 @@ def list_to_obj(raw_transaction):
 
 def save_transactions_db(raw_transactions):
     if not duplicate_day_transaction(raw_transactions):
+        date = first_date(raw_transactions)
+        Register.objects.create(date=date)
         for t in raw_transactions:
             transaction = list_to_obj(t)
             transaction.save()
