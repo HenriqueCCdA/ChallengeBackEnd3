@@ -34,12 +34,15 @@
     <section  class="m-3">
     {% if status == 'ok' %}
         <div class="alert alert-success">
-            <p> Importação do arquivo {{ csv_file }} feito com sucesso </p>
+            <p> Importação do arquivo {{ csv_file.name }} feito com sucesso </p>
         </div>
-    {% endif %}
-    {% if status == 'fail' %}
+    {% elif status == 'empty' %}
         <div class="alert alert-danger">
-            <p> Erro na importação do arquivo {{ csv_file }} </p>
+            <p> Erro na importação do arquivo {{ csv_file.name }}. O arquivo está vazio! </p>
+        </div>
+    {% elif status == 'duplicate' %}
+        <div class="alert alert-danger">
+            <p> Erro na importação do arquivo {{ csv_file.name }}. O arquivo de {{ day }} já foi importado! </p>
         </div>
     {% endif %}
     </section>
