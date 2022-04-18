@@ -1,4 +1,7 @@
 from datetime import datetime
+from decimal import Decimal
+
+from cbe3.core.models import Transaction
 
 
 def read_csv(file_path=None):
@@ -19,6 +22,7 @@ def file_is_empty(transactions):
 
 def get_date(transation):
     return datetime.fromisoformat(transation[-1]).date()
+
 
 def first_date(transactions):
     return get_date(transactions[0])
@@ -65,5 +69,31 @@ def transaction_valid(transactions):
     return transactions
 
 
-def transcation_save_db(transactions):
-    pass
+def duplicate_day_transaction(raw_transactions):
+    date = first_date(raw_transactions)
+
+    t = Transaction.objects.filter(transaction_datetime__date=date)
+
+    return not len(t) == 0
+
+
+def list_to_obj(raw_transaction):
+    return Transaction(
+        source_bank=raw_transaction[0],
+        origin_agency=raw_transaction[1],
+        origin_account=raw_transaction[2],
+        destination_bank=raw_transaction[3],
+        destination_agency=raw_transaction[4],
+        destination_account=raw_transaction[5],
+        transaction_amount=Decimal(raw_transaction[6]),
+        transaction_datetime=datetime.fromisoformat(raw_transaction[7])
+    )
+
+
+def save_transactions_db(raw_transactions):
+    if not duplicate_day_transaction(raw_transactions):
+        for t in raw_transactions:
+            transaction = list_to_obj(t)
+            transaction.save()
+        return True
+    return False

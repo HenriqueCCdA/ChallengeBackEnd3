@@ -45,6 +45,7 @@ def csv_invalid_by_year():
 
     return '\n'.join((line1, line2, line3))
 
+
 @pytest.fixture
 def csv_miss_info():
     line1 = f'BANCO DO BRASIL,0001,00001-1,BANCO BRADESCO,0001,00001-1,8000,{DATE1}'

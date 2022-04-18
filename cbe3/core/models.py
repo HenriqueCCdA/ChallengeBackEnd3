@@ -4,7 +4,7 @@ from django.db import models
 class Transaction(models.Model):
     source_bank = models.CharField('banco de origem', max_length=100)
     origin_agency = models.CharField('agencia de origem', max_length=4)
-    origin_account =  models.CharField('agencia de origem', max_length=7)
+    origin_account = models.CharField('agencia de origem', max_length=7)
     destination_bank = models.CharField('banco de origem', max_length=100)
     destination_agency = models.CharField('agencia de origem', max_length=4)
     destination_account = models.CharField('banco de origem', max_length=100)

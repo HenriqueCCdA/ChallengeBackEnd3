@@ -1,8 +1,8 @@
-from cbe3.core.transation import (file_is_empty,
-                                  first_date,
-                                  transaction_valid,
-                                  transaction_valid_by_date,
-                                  transaction_valid_by_missing_information)
+from cbe3.core.transaction import (file_is_empty,
+                                   first_date,
+                                   transaction_valid,
+                                   transaction_valid_by_date,
+                                   transaction_valid_by_missing_information)
 from cbe3.core.views import read_csv
 from unittest import mock
 
@@ -129,12 +129,12 @@ def test_transaction_real_exemplo(mocker, csv_real_exemplo):
     t_valid = transaction_valid(t)
 
     expected = [
-        ['BANCO DO BRASIL','0001','00001-1','BANCO BRADESCO','0001','00001-1','8000','2022-01-01T07:30:00'],
-        ['BANCO SANTANDER','0001','00001-1','BANCO BRADESCO','0001','00001-1','210','2022-01-01T08:12:00'],
-        ['BANCO SANTANDER','0001','00002-1','BANCO BRADESCO','0001','00001-1','79800.22','2022-01-01T08:44:00'],
-        ['BANCO BANRISUL','0001','00001-1','BANCO BRADESCO','0001','00001-1','100','2022-01-01T16:30:00'],
-        ['BANCO ITAU','0001','00002-1','BANCO BRADESCO','0001','00001-1','1000','2022-01-01T19:30:00'],
-        ['NUBANK','0001','00001-1','BANCO BRADESCO','0001','00001-1','2000','2022-01-01T19:34:00'],
+        ['BANCO DO BRASIL', '0001', '00001-1', 'BANCO BRADESCO', '0001', '00001-1', '8000', '2022-01-01T07:30:00'],
+        ['BANCO SANTANDER', '0001', '00001-1', 'BANCO BRADESCO', '0001', '00001-1', '210', '2022-01-01T08:12:00'],
+        ['BANCO SANTANDER', '0001', '00002-1', 'BANCO BRADESCO', '0001', '00001-1', '79800.22', '2022-01-01T08:44:00'],
+        ['BANCO BANRISUL', '0001', '00001-1', 'BANCO BRADESCO', '0001', '00001-1', '100', '2022-01-01T16:30:00'],
+        ['BANCO ITAU', '0001', '00002-1', 'BANCO BRADESCO', '0001', '00001-1', '1000', '2022-01-01T19:30:00'],
+        ['NUBANK', '0001', '00001-1', 'BANCO BRADESCO', '0001', '00001-1', '2000', '2022-01-01T19:34:00'],
     ]
 
     assert len(t_valid) == len(expected)
