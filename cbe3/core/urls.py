@@ -3,5 +3,5 @@ from django.urls import path
 
 
 urlpatterns = [
-    path('import/', import_csv, name='import_csv'),
+    path('', import_csv, name='import_csv'),
 ]
