@@ -1,17 +1,16 @@
+import csv
 from datetime import datetime
 from decimal import Decimal
+from io import StringIO
 
 from cbe3.core.models import Register, Transaction
 
 
-def read_csv(file_path=None):
-    import csv
+def file_csv(file_in_memory):
 
-    transactions = []
-    with open(file_path) as f:
-        reader = csv.reader(f)
-        for r in reader:
-            transactions.append(r)
+    f = StringIO(file_in_memory.read().decode('utf-8'))
+
+    transactions = [line for line in csv.reader(f)]
 
     return transactions
 

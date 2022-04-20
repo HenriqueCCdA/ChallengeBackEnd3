@@ -1,4 +1,8 @@
+from io import BytesIO
+
 import pytest
+from cbe3.core.transaction import file_csv
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 DATE1 = '2022-01-01T07:30:00'
@@ -78,3 +82,15 @@ def csv_real_exemplo():
     line10 = 'CAIXA ECONOMICA FEDERAL,0001,00001-1,BANCO BRADESCO,0001,,900,2022-01-01T22:30:00'
 
     return '\n'.join((line1, line2, line3, line4, line5, line6, line7, line8, line9, line10))
+
+
+def transaction_from_file(csv_str_format):
+    file = BytesIO(csv_str_format.encode())
+    size = file.getbuffer().nbytes
+    file_in_memory = InMemoryUploadedFile(file,
+                                          'test_file.csv',
+                                          'text/csv',
+                                          size,
+                                          None,
+                                          {})
+    return file_csv(file_in_memory)
