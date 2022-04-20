@@ -1,21 +1,22 @@
 from django.shortcuts import render
-from django.core.files.storage import FileSystemStorage
 from cbe3.core.models import Register
 
-from cbe3.core.transaction import file_is_empty, first_date, read_csv, save_transactions_db, transaction_valid
+from cbe3.core.transaction import (file_csv,
+                                   file_is_empty,
+                                   first_date,
+                                   save_transactions_db,
+                                   transaction_valid)
 
 
 def import_csv(request):
     dict_ = {}
     dict_['register'] = Register.objects.all()
     if request.method == 'POST' and request.FILES['csv-file']:
-        csv_file = request.FILES['csv-file']
-        fs = FileSystemStorage()
-        file_name = fs.save(csv_file.name, csv_file)
-        path_file_name = fs.path(file_name)
-        raw_transactions = read_csv(file_path=path_file_name)
+        file_in_memory = request.FILES['csv-file']
+
+        raw_transactions = file_csv(file_in_memory)
         raw_transactions = transaction_valid(raw_transactions)
-        dict_['csv_file'] = csv_file
+        dict_['csv_file'] = file_in_memory.name
         if file_is_empty(raw_transactions):
             dict_['status'] = 'empty'
             return render(request, 'import_csv.html', dict_)
