@@ -11,7 +11,7 @@ from cbe3.core.transaction import (file_csv,
 def import_csv(request):
     dict_ = {}
     dict_['register'] = Register.objects.all()
-    if request.method == 'POST' and request.FILES['csv-file']:
+    if request.method == 'POST' and request.FILES.get('csv-file'):
         file_in_memory = request.FILES['csv-file']
 
         raw_transactions = file_csv(file_in_memory)
