@@ -1,4 +1,4 @@
-django
+django[bcrypt]
 python-decouple
 django-extensions
 ipython

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from cbe3.core.models import Register
+from cbe3.core.models import Register, User
 
 from cbe3.core.transaction import (file_csv,
                                    file_is_empty,
@@ -30,3 +30,24 @@ def import_csv(request):
         return render(request, 'import_csv.html', dict_)
 
     return render(request, 'import_csv.html', dict_)
+
+
+def register(request):
+
+    if request.method == 'POST':
+        username = request.POST['username'] # TODO: Valida com forms.
+        email = request.POST['email']
+
+        old_user = User.objects.filter(email=email).first()
+
+        if old_user:
+            context = {'status': 'duplicate', 'email': email}
+            return render(request, 'register_user.html', context)
+
+        user = User.objects.create_user(username=username, email=email)
+
+    return render(request, 'register_user.html')
+
+
+def users_list(request):
+    return render(request, 'users_list.html')
