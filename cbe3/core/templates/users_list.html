@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap 5-->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" >
+
+
+    <title>Usuarios Cadastrados</title>
+</head>
+<body>
+
+    <section  class="m-3">
+        <h1 class="text-center">USUÁRIOS CADASTRADOS</h1>
+        <a class="btn btn-primary" href="{% url 'register' %}"> Novo </a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">NOME</th>
+                    <th scope="col">EMAIL</th>
+                    <th scope="col">OPÇÕES</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <th scope="row">{{u.id}}</th>
+                    <td>{{u.username}}</td>
+                    <td>{{u.email}}</td>
+                    <td>
+                        <a class="btn btn btn-info" href="{% url 'update_user' u.id%}"> Editar </a>
+                        <a class="btn btn-danger" href="{% url 'delete_user' u.id%}"> Remover </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+</body>
+</html>

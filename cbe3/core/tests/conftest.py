@@ -1,6 +1,7 @@
 from io import BytesIO
 
 import pytest
+from cbe3.core.models import User
 from cbe3.core.transaction import file_csv
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
@@ -94,3 +95,15 @@ def transaction_from_file(csv_str_format):
                                           None,
                                           {})
     return file_csv(file_in_memory)
+
+
+@pytest.fixture
+def users(db):
+    user1 = User.objects.create(username='Rodrigo da Silva',
+                                email='rodrigo.silva@email.com',
+                                is_staff='False')
+    user2 = User.objects.create(username='Jacqueline Oliveira',
+                                email='jacqueline.oliveira@email.com.br',
+                                is_staff='False')
+
+    return user1, user2
