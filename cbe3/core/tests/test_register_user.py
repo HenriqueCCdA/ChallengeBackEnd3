@@ -40,7 +40,7 @@ def test_register_template(client, url, db):
 
 
 def test_register(client: Client, url, valid_user, db):
-    resp = client.post(url, data=valid_user)
+    client.post(url, data=valid_user)
 
     user = User.objects.get(pk=1)
 
@@ -49,7 +49,7 @@ def test_register(client: Client, url, valid_user, db):
 
 
 def test_email_exists(client, url, user_same_email, user_db):
-    resp = client.post(url, data=user_same_email)
+    client.post(url, data=user_same_email)
 
     assert User.objects.count() == 1
 

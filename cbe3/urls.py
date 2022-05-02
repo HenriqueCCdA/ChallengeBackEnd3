@@ -21,6 +21,7 @@ from django.conf import settings
 urlpatterns = [
     path('', include('cbe3.core.urls')),
     path('admin/', admin.site.urls),
+    path('contas/', include('django.contrib.auth.urls')),
 ]
 
 if settings.DEBUG:

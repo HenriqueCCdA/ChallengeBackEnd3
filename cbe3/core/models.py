@@ -5,8 +5,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
-from django.db import models
-
 
 class Transaction(models.Model):
     source_bank = models.CharField('Banco de origem', max_length=100)
@@ -36,7 +34,7 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError('The given email username must be set')
 
-        username = username # TODO: Normalizar
+        username = username  # TODO: Normalizar
         email = self.normalize_email(email)
         user = self.model(username=username, email=email, **extra_fields)
         user.email_user('Senha aleatoria', f'Sua senha é : {password}', 'minhaaplicao@emial.com')
@@ -100,7 +98,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def clean(self):
         super().clean()
         self.email = self.__class__.objects.normalize_email(self.email)
-
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""

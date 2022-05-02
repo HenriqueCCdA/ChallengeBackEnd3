@@ -1,0 +1,17 @@
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Senha aleatoria
+From: minhaaplicao@emial.com
+To: henrique.ccda@gmail.com
+Date: Mon, 02 May 2022 01:33:57 -0000
+Message-ID: <165145523790.34220.341083938391187746@henrique-PC>
+
+Sua senha é : 280124
+-------------------------------------------------------------------------------
+[01/May/2022 22:33:58] "POST /cadastro/ HTTP/1.1" 200 11472
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Senha aleatoria
+From: minhaaplicao@emial.com
+To: novo@gmail.com

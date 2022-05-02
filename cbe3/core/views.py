@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from cbe3.core.models import Register, User
 
 from cbe3.core.transaction import (file_csv,
@@ -35,7 +35,7 @@ def import_csv(request):
 def register(request):
 
     if request.method == 'POST':
-        username = request.POST['username'] # TODO: Valida com forms.
+        username = request.POST['username']  # TODO: Valida com forms.
         email = request.POST['email']
 
         old_user = User.objects.filter(email=email).first()
@@ -44,10 +44,38 @@ def register(request):
             context = {'status': 'duplicate', 'email': email}
             return render(request, 'register_user.html', context)
 
-        user = User.objects.create_user(username=username, email=email)
+        User.objects.create_user(username=username, email=email)
 
     return render(request, 'register_user.html')
 
 
 def users_list(request):
-    return render(request, 'users_list.html')
+
+    users = User.objects.filter(is_staff=False)
+
+    return render(request, 'users_list.html', {'users': users})
+
+
+def delete_user(request, id):
+    User.objects.get(id=id).delete()
+
+    users = User.objects.filter(is_staff=False)
+
+    return render(request, 'users_list.html', {'users': users})
+
+
+def update_user(request, id):
+
+    if request.method == 'POST':
+        username = request.POST['username']  # TODO: Valida com forms.
+
+        user = User.objects.get(id=id)
+
+        user.username = username
+        user.save()
+
+        return redirect('users_list')
+
+    user = User.objects.get(id=id)
+
+    return render(request, 'edit_user.html', {'user_edit': user})
